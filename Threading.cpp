@@ -75,11 +75,12 @@ public:
 	Printer();
 	~Printer();
 
-	//each function will take 50 cycle to be executed
+	//each function will take 100 cycle to be executed
 	void print(User^ user, int copies);
 	void scan(User^ user);
 	void copy(User^ user, int copies);
 	void userInteraction();
+	void systemOperations();
 
 private:
 	int numberOfCopies;
@@ -102,7 +103,7 @@ void Printer::print(User^ user, int copies)
 	Console::Write("Document type: ");
 	Console::WriteLine(user->getDocument());
 	Console::WriteLine("Number of copies: {0}", copies);
-	for (int i = 0; i <= 10000; i++)
+	for (int i = 0; i <= 100; i++)
 	{
 		Console::WriteLine("Printing...");
 	}
@@ -118,13 +119,10 @@ void Printer::scan(User^ user)
 	Console::WriteLine(user->getDocument());
 	for (int i = 0; i <= 100; i++)
 	{
-		if (i / 2 == 0)
-		{
-			Console::WriteLine("Scanning... ");
-		}
+		Console::WriteLine("Scanning...");
 
 	}
-
+	Console::WriteLine("Scanning was done successfully");
 }
 
 void Printer::copy(User^ user, int copies)
@@ -133,11 +131,12 @@ void Printer::copy(User^ user, int copies)
 	Console::Write("Document type: ");
 	Console::WriteLine(user->getDocument());
 	Console::WriteLine("Number of copies:{0}", copies);
-	for (int i = 0; i <= 50; i++)
+	for (int i = 0; i <= 100; i++)
 	{
 		Console::WriteLine("Copying... ");
 
 	}
+	Console::WriteLine(" was done successfully");
 }
 
 void Printer::userInteraction()
@@ -147,6 +146,15 @@ void Printer::userInteraction()
 		String^ answer;
 		answer = Console::ReadLine();
 
+}
+
+void Printer::systemOperations()
+{
+	for (int i = 0;i<100;i++)
+	{
+		Console::WriteLine("Performing system operations");
+	}
+	
 }
 
 int main()
@@ -163,9 +171,10 @@ int main()
 	// it could encapsulated multiple functions
 	Thread^ t1 = gcnew Thread(gcnew ThreadStart(printer1, &Printer::userInteraction));
 	t1->Name = "t1";
-	Thread^ t2 = gcnew Thread(gcnew ThreadStart(printer1, &Printer::userInteraction));
+	Thread^ t2 = gcnew Thread(gcnew ThreadStart(printer1, &Printer::systemOperations));
 	t2->Name = "t2";
 	t2->Start();
+	
 	
 
 	// creating an instance of user
