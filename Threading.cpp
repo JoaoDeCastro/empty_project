@@ -28,6 +28,7 @@ ref class User
 public:
 	User();
 	~User();
+	
 
 	//setting user
 	void setUser(String^ user, Document type)
@@ -47,7 +48,7 @@ public:
 	}
 
 
-private:
+	protected:
 	String^ name;
 	Document typeOfDocument;
 
@@ -67,14 +68,14 @@ User::~User()
 
 
 
-ref class Printer : public User
+ref class Printer :  public User
 {
 public:
 	Printer();
 	~Printer();
-	void print(Document type, int copies);
-	void scan(Document type);
-	void copy(Document type, int copies);
+	void print(User^ user, int copies);
+	void scan(User^ user);
+	void copy(User^ user, int copies);
 
 private:
 	int numberOfCopies;
@@ -91,24 +92,40 @@ Printer::~Printer()
 
 
 
-void Printer::print(Document type, int copies)
+void Printer::print(User^ user, int copies)
 {
-	Console::WriteLine("Printing document :{0}", type);
+	Console::WriteLine("Printing document");
+	Console::WriteLine(user->getDocument());
 	Console::WriteLine("Number of copies:{0}", copies);
+	
+	
 }
 
 
-void Printer::scan(Document type)
+void Printer::scan(User^ user)
 {
+	Console::WriteLine("Scanning document");
+	Console::WriteLine(user->getDocument());
+	
 
 }
 
-void Printer::copy(Document type, int copies)
+void Printer::copy(User^ user, int copies)
 {
-
+	Console::WriteLine("Copying document");
+	Console::WriteLine(user->getDocument());
+	Console::WriteLine("Number of copies:{0}", copies);
 }
 
 int main()
 {
-	Console::WriteLine("Hello World threading");
+	Console::WriteLine("### WELCOME TO JHC PRINTER");
+
+	User^ joao = gcnew User();
+	joao->setUser("Joan", Picture);
+	
+	Printer^ printer1 = gcnew Printer();
+	printer1->print(joao, 5);
+
+	
 }
